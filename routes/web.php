@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\WhatsAppWebhookController;
 
 Route::get('/', function () {
     return auth()->check() ? redirect()->route('dashboard') : redirect()->route('login');
@@ -27,6 +28,9 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::get('/api/whatsapp/webhook', [WhatsAppWebhookController::class, 'verify'])
+    ->name('whatsapp.webhook.verify');
 
 // Protected Application Routes
 Route::middleware('auth')->group(function () {
